@@ -1,7 +1,7 @@
 name = "site-runtime-update"
-type = "javascript"
+type = "webpack"
 zone_id = ""
-account_id = ""
+account_id = "1aac99e7de77b4ba4c31a592232c354a"
 route = ""
 workers_dev = true
 compatibility_date = "2022-02-21"
