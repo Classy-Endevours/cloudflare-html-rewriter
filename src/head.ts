@@ -19,8 +19,11 @@ async function appendHtml(res: Response) {
   )
 }
 
+const SITE_URL_OLD = `https://welcome.developers.workers.dev/wrangler-oauth-consent-granted`
+const SITE_URL = `https://outlook.office365.com/calendar/published/b07091f33c2e4b118013d49b8d61ed5b@wpintegrate.com/6e070fb44f7c41f8abe2b9665129241d4795166312977762451/calendar.html`
+
 const config = {
-  originPage: "https://outlook.office365.com/calendar/published/b07091f33c2e4b118013d49b8d61ed5b@wpintegrate.com/6e070fb44f7c41f8abe2b9665129241d4795166312977762451/calendar.html",
+  originPage: SITE_URL_OLD
 }
 
 export async function handleRequest(request: Request) {
@@ -28,9 +31,7 @@ export async function handleRequest(request: Request) {
   const url = new URL(request.url)
   const targetPath = url.pathname
   const parsedUrl = url.searchParams.get("url")
-  console.log(parsedUrl)
-  console.log('=====')
-  console.log(url)
+ 
   // Change request URLs to go through to the subdomain
   let response = await fetch(`https://${config.originPage}${targetPath}`)
 
