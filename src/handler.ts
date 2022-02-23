@@ -9,7 +9,7 @@ const WIKI_PEDIA = 'https://en.wikipedia.org/wiki/Main_Page'
 export async function handleRequest(request: Request): Promise<Response> {
   // Only GET requests work with this proxy.
   if (request.method !== 'GET') return MethodNotAllowed(request)
-  return fetch(SITE_URL)
+  return fetch(SITE_URL_OLD)
 }
 function MethodNotAllowed(request: Request) {
   return new Response(`Method ${request.method} not allowed.`, {

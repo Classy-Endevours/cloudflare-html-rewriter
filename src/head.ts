@@ -1,4 +1,4 @@
-// Head rewriter to handle favicon
+
 class HeadRewriter {
   element(element: Element) {
     element.append(
@@ -10,33 +10,27 @@ class HeadRewriter {
   }
 }
 
-// Change HTML response to fix favicon
-async function appendHtml(res: Response) {
-  return (
-    new HTMLRewriter()
-      .on("head", new HeadRewriter())
-      .transform(res)
-  )
-}
+const rewriter = new HTMLRewriter()
+  .on("head", new HeadRewriter())
+
 
 const SITE_URL_OLD = `https://welcome.developers.workers.dev/wrangler-oauth-consent-granted`
 const SITE_URL = `https://outlook.office365.com/calendar/published/b07091f33c2e4b118013d49b8d61ed5b@wpintegrate.com/6e070fb44f7c41f8abe2b9665129241d4795166312977762451/calendar.html`
+const WIKI_PEDIA = 'https://en.wikipedia.org/wiki/Main_Page'
+const YOUTUBE = 'https://www.youtube.com/'
+const GOOGLE_DOCUMENT = 'https://docs.google.com/document/d/1MMzA-3ln3DJxI8SNcWpA7hqCiBQpi2JdnIt-l3YkNpo/edit?usp=sharing'
 
-const config = {
-  originPage: SITE_URL_OLD
+export async function handleRequest(request: Request): Promise<Response> {
+  // Only GET requests work with this proxy.
+  if (request.method !== 'GET') return MethodNotAllowed(request)
+  const res = await fetch(GOOGLE_DOCUMENT)
+  return rewriter.transform(res)
 }
-
-export async function handleRequest(request: Request) {
-  // Grab the request URL's pathname, we'll use it later
-  const url = new URL(request.url)
-  const targetPath = url.pathname
-  const parsedUrl = url.searchParams.get("url")
- 
-  // Change request URLs to go through to the subdomain
-  let response = await fetch(`https://${config.originPage}${targetPath}`)
-
-  // We don't need to change these requests at all
-  // So we return the response of the fetch request from above
-  // immediately.
-  return appendHtml(response)
+function MethodNotAllowed(request: Request) {
+  return new Response(`Method ${request.method} not allowed.`, {
+    status: 405,
+    headers: {
+      'Allow': 'GET'
+    }
+  })
 }
