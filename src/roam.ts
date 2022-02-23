@@ -11,6 +11,9 @@ const config = {
   const OUTLOOK = `https://outlook.office365.com/calendar/published/b07091f33c2e4b118013d49b8d61ed5b@wpintegrate.com/6e070fb44f7c41f8abe2b9665129241d4795166312977762451/calendar.html`
   const GOOGLE = 'https://docs.google.com' 
 
+  const WP_BOOKING_PROXY_URL = 'https://booking.wpintegrate.net/owa/calendar/testbusiness@dwsnow.com/bookings/'
+  const MS_BOOKING_OUTLOOK_URL = 'https://outlook.office365.com/owa/calendar/TestBusiness@dwsnow.com/bookings/'
+
   // Function that processes requests to the domain the worker is at
   export async function handleRequest(request: Request) {
     // Grab the request URL's pathname, we'll use it later
@@ -19,16 +22,15 @@ const config = {
   
     // Send request through to roamresearch.com, get response
     // let response = await fetch(`${OUTLOOK}${targetPath}`)
-    let response = await fetch(`${OUTLOOK}`)
-    console.log(response)
-  
+    let response = await fetch(`${MS_BOOKING_OUTLOOK_URL}`)
+    return modifyResponse(response)
     // For the root path, modify the response to send to startPage
-    if (targetPath === '/') {
-      return modifyResponse(response)
-    } else {
-    // For other paths, simply return the response
-      return response
-    }
+    // if (targetPath === '/') {
+    //   return modifyResponse(response)
+    // } else {
+    // // For other paths, simply return the response
+    //   return response
+    // }
   }
   
   // Modify the response for root path
