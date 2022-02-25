@@ -1,4 +1,4 @@
-import { handleRequest } from './fruition-notion-service'
+import { handleRequest } from './audit'
 
 addEventListener('fetch', (event) => {
   event.passThroughOnException()

@@ -5,7 +5,7 @@
 /* CONFIGURATION STARTS HERE */
 
 /* Step 1: enter your domain name like fruitionsite.com */
-const MY_DOMAIN = 'southlakeshorecapital.com'
+const MY_DOMAIN = 'outlook.office365.com/owa/calendar/TestBusiness@dwsnow.com/bookings/'
 const MS_BOOKING_OUTLOOK_URL = 'https://outlook.office365.com/owa/calendar/TestBusiness@dwsnow.com/bookings/'
 
 /*
@@ -81,7 +81,7 @@ export async function handleRequest(request: Request) {
     return handleOptions(request)
   }
   let url = new URL(request.url)
-  url.hostname = 'www.notion.so'
+  url.hostname = 'www.outlook.office365.com'
   if (url.pathname === '/robots.txt') {
     return new Response('Sitemap: https://' + MY_DOMAIN + '/sitemap.xml')
   }
@@ -121,6 +121,9 @@ export async function handleRequest(request: Request) {
     const pageId = SLUG_TO_PAGE[url.pathname.slice(1)]
     return Response.redirect('https://' + MY_DOMAIN + '/' + pageId, 301)
   } else {
+      console.log({
+          u: url.toString()
+      })
     response = await fetch(url.toString(), {
       body: request.body,
       headers: request.headers,
