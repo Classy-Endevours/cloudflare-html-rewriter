@@ -14,6 +14,8 @@ const config = {
   const WP_BOOKING_PROXY_URL = 'https://booking.wpintegrate.net/owa/calendar/testbusiness@dwsnow.com/bookings/'
   const MS_BOOKING_OUTLOOK_URL = 'https://outlook.office365.com/owa/calendar/TestBusiness@dwsnow.com/bookings/'
 
+  const MS_IGNITE_PPT = 'https://view.officeapps.live.com/op/view.aspx?src=https://storage.snappages.site/op8ir2nu2f/assets/files/Microsoft-Ignite-2020-Roadmap-Slide-Summ-12.pptx'
+
   // Function that processes requests to the domain the worker is at
   export async function handleRequest(request: Request) {
     // Grab the request URL's pathname, we'll use it later
@@ -23,7 +25,7 @@ const config = {
     // Send request through to roamresearch.com, get response
     // let response = await fetch(`${OUTLOOK}${targetPath}`)
     let response = await fetch(`${MS_BOOKING_OUTLOOK_URL}`)
-    return modifyResponse(response)
+    return response
     // For the root path, modify the response to send to startPage
     // if (targetPath === '/') {
     //   return modifyResponse(response)

@@ -1,4 +1,4 @@
-import { handleRequest } from './roam'
+import { handleRequest } from './fruition-notion-service'
 
 addEventListener('fetch', (event) => {
   event.passThroughOnException()
