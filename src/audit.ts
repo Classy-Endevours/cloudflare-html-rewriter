@@ -1,4 +1,7 @@
-const GOOGLE_FONT: any = 'IBM Plex Sans'
+import BodyRewriter from "./rewriters/body"
+import HeadRewriter from "./rewriters/head"
+import MetaRewriter from "./rewriters/meta"
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, OPTIONS',
@@ -24,8 +27,6 @@ function handleOptions(request: Request) {
     })
   }
 }
-const MS_BOOKING_OUTLOOK_URL =
-  'https://outlook.office365.com/owa/calendar/TestBusiness@dwsnow.com/bookings/'
 
 export async function handleRequest(request: Request) {
   if (request.method === 'OPTIONS') {
@@ -33,6 +34,7 @@ export async function handleRequest(request: Request) {
   }
   let url = new URL(request.url)
   url.hostname = 'outlook.office365.com'
+  // url.hostname = 'lists.live.com'
 
   let response
 
@@ -49,22 +51,12 @@ export async function handleRequest(request: Request) {
 }
 
 async function injectJavaScript(res: Response) {
-  return new HTMLRewriter().on('head', new HeadRewriter()).transform(res)
+  return new HTMLRewriter()
+  .on('head', new HeadRewriter())
+  .on('title', new MetaRewriter())
+  .on('meta', new MetaRewriter())
+  .on('body', new BodyRewriter())
+    .transform(res)
 }
 
-class HeadRewriter {
-  element(element: Element) {
-    if (GOOGLE_FONT !== '') {
-      element.append(
-        `<link href="https://fonts.googleapis.com/css?family=${GOOGLE_FONT.replace(
-          ' ',
-          '+',
-        )}:Regular,Bold,Italic&display=swap" rel="stylesheet">
-        <style>* { font-family: "${GOOGLE_FONT}" !important; }</style>`,
-        {
-          html: true,
-        },
-      )
-    }
-  }
-}
+
