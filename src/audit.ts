@@ -28,12 +28,12 @@ function handleOptions(request: Request) {
   }
 }
 
-export async function handleRequest(request: Request) {
+export async function handleRequest(request: Request, domain: string) {
   if (request.method === 'OPTIONS') {
     return handleOptions(request)
   }
   let url = new URL(request.url)
-  url.hostname = 'outlook.office365.com'
+  url.hostname = domain
   // url.hostname = 'lists.live.com'
 
   let response

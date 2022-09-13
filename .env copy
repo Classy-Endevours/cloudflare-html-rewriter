@@ -1,4 +1,3 @@
-conf_path = C:\Users\piyus\.wrangler\config\default.toml
 GRAPH_HOST='https://graph.microsoft.com'
 AUTH_PASS_THROUGH=false
 
