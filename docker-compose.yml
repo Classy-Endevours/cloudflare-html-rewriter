@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  wrangler_application: 
+    container_name: wrangler_application
+    build: 
+      context: .
+    environment:
+      CLOUDFLARE_API_TOKEN: ssQsQGkuj-bZDG-V_4exn56Ju59SA4mW3_nognln
+      SCRIPT: ssQsQGkuj-bZDG-V_4exn56Ju59SA4mW3_nognln
