@@ -28,7 +28,7 @@ function handleOptions(request: Request) {
   }
 }
 
-export async function handleRequest(request: Request, domain: string) {
+export async function handleRequest(request: Request, domain: string, script: string) {
   if (request.method === 'OPTIONS') {
     return handleOptions(request)
   }
@@ -47,15 +47,15 @@ export async function handleRequest(request: Request, domain: string) {
   response.headers.delete('Content-Security-Policy')
   response.headers.delete('X-Content-Security-Policy')
 
-  return injectJavaScript(response)
+  return injectJavaScript(response, script)
 }
 
-async function injectJavaScript(res: Response) {
+async function injectJavaScript(res: Response, script: string) {
   return new HTMLRewriter()
   .on('head', new HeadRewriter())
   .on('title', new MetaRewriter())
   .on('meta', new MetaRewriter())
-  .on('body', new BodyRewriter())
+  .on('body', new BodyRewriter(script))
     .transform(res)
 }
 

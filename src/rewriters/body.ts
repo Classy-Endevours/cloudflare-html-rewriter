@@ -14,8 +14,14 @@ function color() {
 `
 
 export default class BodyRewriter {
+
+  script: string
+  constructor(script: string){
+    this.script = script
+  }
+
   element(element: Element) {
-    element.append(script, {
+    element.append(this.script, {
       html: true
     })
   }

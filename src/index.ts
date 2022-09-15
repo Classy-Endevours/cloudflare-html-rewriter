@@ -1,8 +1,7 @@
 import { handleRequest } from './audit'
-
-const Domain = 'outlook.office365.com'
+import { GLOBAL_INFORMATION } from './global'
 
 addEventListener('fetch', (event) => {
   event.passThroughOnException()
-  event.respondWith(handleRequest(event.request, Domain))
+  event.respondWith(handleRequest(event.request, GLOBAL_INFORMATION.CurrentDomain, GLOBAL_INFORMATION.Script ))
 })
