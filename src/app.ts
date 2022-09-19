@@ -28,7 +28,7 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
       containerGroupName,
       containerName,
       {
-        command: `export SCRIPT_ID=${req.params.id} && export SCRIPT_VALUE=${req.query.SCRIPT_VALUE} && npm run publish`,
+        command: `npm run testing && export SCRIPT_ID=${req.params.id} && export SCRIPT_VALUE=${req.query.SCRIPT_VALUE} && npm run publish`,
         terminalSize: {
           rows: 1,
           cols: 1

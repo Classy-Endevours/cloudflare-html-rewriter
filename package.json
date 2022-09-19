@@ -6,6 +6,7 @@
   "scripts": {
     "build-web": "tsc",
     "build": "webpack",
+    "testing": "node serve/test.js",
     "start": "node serve/app.js",
     "dev": "ts-node src/app.ts",
     "publish": "wrangler publish src/index.ts",
