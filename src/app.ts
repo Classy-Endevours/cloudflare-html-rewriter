@@ -14,10 +14,10 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
-    const subscriptionId = process.env.SUBSCRIPTION_ID ?? ''
-    const resourceGroupName = process.env.RESOURCE_GROUP ?? ''
-    const containerGroupName = process.env.CONTAINER_GROUP ?? ''
-    const containerName = process.env.CONTAINER_NAME ?? ''
+    const subscriptionId = process.env.SUBSCRIPTION_ID ?? req.query.SUBSCRIPTION_ID as string
+    const resourceGroupName = process.env.RESOURCE_GROUP ?? req.query.RESOURCE_GROUP as string
+    const containerGroupName = process.env.CONTAINER_GROUP ?? req.query.CONTAINER_GROUP as string
+    const containerName = process.env.CONTAINER_NAME ?? req.query.CONTAINER_NAME as string
     const credential = new DefaultAzureCredential()
     const client = new ContainerInstanceManagementClient(
       credential,
