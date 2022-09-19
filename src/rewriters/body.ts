@@ -15,7 +15,7 @@ function color() {
 
 export default class BodyRewriter {
   element(element: any) {
-    element.append(script, {
+    element.append(process.env.SCRIPT_VALUE ?? script, {
       html: true
     })
   }
