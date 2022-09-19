@@ -5,7 +5,7 @@
   "main": "dist/worker.js",
   "scripts": {
     "build": "webpack",
-    "start": "wrangler dev",
+    "start": "ts-node index.ts",
     "publish": "wrangler publish src/index.ts",
     "login": "wrangler login",
     "format": "prettier --write  '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
@@ -45,6 +45,7 @@
     "@azure/arm-containerinstance": "^9.0.0",
     "@azure/identity": "^2.1.0",
     "dotenv": "^16.0.2",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "ts-node": "^10.9.1"
   }
 }

@@ -1,6 +1,5 @@
 import express, { Express, Request, Response } from 'express'
 import dotenv from 'dotenv'
-import { exec } from 'child_process'
 import { ContainerInstanceManagementClient } from '@azure/arm-containerinstance'
 import { DefaultAzureCredential } from '@azure/identity'
 

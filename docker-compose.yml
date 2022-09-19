@@ -4,6 +4,8 @@ services:
     container_name: wrangler_application
     build: 
       context: .
+    ports:
+    - "3000:3000"
     environment:
       CLOUDFLARE_API_TOKEN: ssQsQGkuj-bZDG-V_4exn56Ju59SA4mW3_nognln
       SCRIPT: ssQsQGkuj-bZDG-V_4exn56Ju59SA4mW3_nognln
