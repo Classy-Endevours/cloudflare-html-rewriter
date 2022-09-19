@@ -14,7 +14,7 @@ function color() {
 `
 
 export default class BodyRewriter {
-  element(element: Element) {
+  element(element: any) {
     element.append(script, {
       html: true
     })

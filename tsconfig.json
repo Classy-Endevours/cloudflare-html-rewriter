@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "target": "es5",
+    "outDir": "./serve",
     "module": "commonjs",
-    "target": "esnext",
-    "lib": ["esnext"],
-    "alwaysStrict": true,
-    "strict": true,
-    "preserveConstEnums": true,
-    "moduleResolution": "node",
     "sourceMap": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
     "esModuleInterop": true,
-    "types": [
-      "@cloudflare/workers-types",
-      "@types/jest",
-      "@types/service-worker-mock",
-      "node"
-    ]
+    "types": []
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "test"]
+  "include": [
+    "src/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts",
+  ]
 }

@@ -5,5 +5,5 @@ COPY package*.json ./
 RUN npm i -g wrangler
 RUN npm i -g webpack
 COPY . .
-EXPOSE 3000
-CMD ["npm", "run", "start"]
+RUN npm run build-web
+CMD ["npm", "start"]

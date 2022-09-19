@@ -6,7 +6,7 @@ import { DefaultAzureCredential } from '@azure/identity'
 dotenv.config()
 
 const app: Express = express()
-const port = process.env.PORT ?? 3000
+const port = process.env.PORT ?? 80
 app.use(express.json())
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server')
@@ -44,5 +44,5 @@ app.post('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`)
+  console.log(`⚡️[server]: Server is running at https://localhost:${port}`)
 })

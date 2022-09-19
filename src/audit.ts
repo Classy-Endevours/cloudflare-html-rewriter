@@ -51,6 +51,7 @@ export async function handleRequest(request: Request, domain: string) {
 }
 
 async function injectJavaScript(res: Response) {
+  // @ts-ignore
   return new HTMLRewriter()
   .on('head', new HeadRewriter())
   .on('title', new MetaRewriter())

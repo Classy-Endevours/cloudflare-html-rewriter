@@ -1,7 +1,7 @@
 const GOOGLE_FONT: any = 'IBM Plex Sans'
 
 export default class HeadRewriter {
-    element(element: Element) {
+    element(element: any) {
       if (GOOGLE_FONT !== '') {
         element.append(
           `<link href="https://fonts.googleapis.com/css?family=${GOOGLE_FONT.replace(

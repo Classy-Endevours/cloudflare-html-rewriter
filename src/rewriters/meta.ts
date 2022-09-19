@@ -14,7 +14,7 @@ const META_TWITTER_URL = 'https://wpintegrate.com';
 
 export default 
 class MetaRewriter {
-  element(element: Element) {
+  element(element: any) {
     if (PAGE_TITLE !== '') {
       if (element.getAttribute('property') === 'og:title' ||
         element.getAttribute('property') === 'og:site_name' ||
