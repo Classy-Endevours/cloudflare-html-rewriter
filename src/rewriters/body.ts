@@ -21,7 +21,7 @@ export default class BodyRewriter {
   }
 
   element(element: any) {
-    element.append(this.js ?? script, {
+    element.append(this.js, {
       html: true
     })
   }

@@ -51,7 +51,7 @@ export async function handleRequest(request: Request, domain: string) {
 }
 
 const data = [{
-  id: 1,
+  id: '1',
   js: `<script>
   console.log('page has been loaded from docker 1!')
   var var1 = setInterval(color, 200);  
@@ -62,7 +62,7 @@ const data = [{
   }  
   </script>`
 }, {
-  id: 2,
+  id: '2',
   js: `<script>
   console.log('page has been loaded from docker 2!')
   var var1 = setInterval(color, 200);  
@@ -75,9 +75,11 @@ const data = [{
 }]
 
 async function injectJavaScript(res: Response) {
-  const id = parseInt(process.env.SCRIPT_ID ?? '0')
-  let instance = data.find(d => d.id === id)
-  instance = instance ?? data[0]
+  let id = '1'
+  if(process.env.SCRIPT){
+    id = process.env.SCRIPT
+  }
+  let instance = data.find(d => d.id == id)
 
   // @ts-ignore
   return new HTMLRewriter()
