@@ -6,5 +6,6 @@ RUN npm i -g wrangler
 RUN npm i -g typescript 
 RUN npm i -g webpack
 COPY . .
+RUN npm install
 RUN npm run build-web
 CMD ["npm", "start"]
