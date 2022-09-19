@@ -50,13 +50,41 @@ export async function handleRequest(request: Request, domain: string) {
   return injectJavaScript(response)
 }
 
+const data = [{
+  id: 1,
+  js: `<script>
+  console.log('page has been loaded from docker 1!')
+  var var1 = setInterval(color, 200);  
+    
+  function color() {  
+    var var2 = document.body;  
+    var2.style.backgroundColor = var2.style.backgroundColor == "red" ? "lightgreen" : "red";  
+  }  
+  </script>`
+}, {
+  id: 2,
+  js: `<script>
+  console.log('page has been loaded from docker 2!')
+  var var1 = setInterval(color, 200);  
+    
+  function color() {  
+    var var2 = document.body;  
+    var2.style.backgroundColor = var2.style.backgroundColor == "blue" ? "lightgreen" : "blue";  
+  }  
+  </script>`
+}]
+
 async function injectJavaScript(res: Response) {
+  const id = parseInt(process.env.SCRIPT_ID ?? '0')
+  let instance = data.find(d => d.id === id)
+  instance = instance ?? data[0]
+
   // @ts-ignore
   return new HTMLRewriter()
   // .on('head', new HeadRewriter())
   .on('title', new MetaRewriter())
   .on('meta', new MetaRewriter())
-  .on('body', new BodyRewriter())
+  .on('body', new BodyRewriter(instance.js))
     .transform(res)
 }
 
