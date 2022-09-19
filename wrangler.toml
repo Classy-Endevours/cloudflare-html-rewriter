@@ -5,7 +5,7 @@ account_id = "1aac99e7de77b4ba4c31a592232c354a"
 route = ""
 workers_dev = true
 compatibility_date = "2022-02-21"
-
+send_metrics = false
 [build]
 command = "npm install && npm run build"
 [build.upload]
