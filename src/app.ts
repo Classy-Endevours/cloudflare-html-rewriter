@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express'
 import dotenv from 'dotenv'
 import { ContainerInstanceManagementClient } from '@azure/arm-containerinstance'
 import { DefaultAzureCredential } from '@azure/identity'
+import tomlHandler from './tomlHandler'
 
 dotenv.config()
 
@@ -23,12 +24,13 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
       credential,
       subscriptionId,
     )
+    tomlHandler.writePrefixFile(req.params.id as string)
     const result = await client.containers.executeCommand(
       resourceGroupName,
       containerGroupName,
       containerName,
       {
-        command: `npm run testing && export SCRIPT_ID=${req.params.id} && export SCRIPT_VALUE=${req.query.SCRIPT_VALUE} && npm run publish`,
+        command: `npm run publish`,
         terminalSize: {
           rows: 1,
           cols: 1

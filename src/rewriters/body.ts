@@ -1,8 +1,6 @@
 
-const script = `
-
-<script>
-console.log('page has been loaded!')
+  // @ts-ignore
+const script = `<script>console.log('page has been loaded! ${JAVASCRIPT_ID}')
 var var1 = setInterval(color, 200);  
   
 function color() {  

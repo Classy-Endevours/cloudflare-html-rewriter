@@ -52,8 +52,8 @@ export async function handleRequest(request: Request, domain: string) {
 
 const data = [{
   id: '1',
-  js: `<script>
-  console.log('page has been loaded from docker 1!')
+  // @ts-ignore
+  js: `<script> console.log('page has been loaded from docker 1  ${JAVASCRIPT_ID}!')
   var var1 = setInterval(color, 200);  
     
   function color() {  
@@ -63,8 +63,8 @@ const data = [{
   </script>`
 }, {
   id: '2',
-  js: `<script>
-  console.log('page has been loaded from docker 2!')
+  // @ts-ignore
+  js: `<script>console.log('page has been loaded from docker 2  ${JAVASCRIPT_ID}!')
   var var1 = setInterval(color, 200);  
     
   function color() {  
@@ -75,10 +75,8 @@ const data = [{
 }]
 
 async function injectJavaScript(res: Response) {
-  let id = '1'
-  if(process.env.SCRIPT){
-    id = process.env.SCRIPT
-  }
+  // @ts-ignore
+  let id = JAVASCRIPT_ID
   let instance = data.find(d => d.id == id)
 
   // @ts-ignore

@@ -6,7 +6,9 @@ route = ""
 workers_dev = true
 compatibility_date = "2022-02-21"
 send_metrics = false
+[vars]
+JAVASCRIPT_ID = "2"
 [build]
-command = "npm install && npm run build"
+command = "npm run build"
 [build.upload]
 format = "service-worker"

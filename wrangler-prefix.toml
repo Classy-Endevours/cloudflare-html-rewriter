@@ -6,8 +6,8 @@ route = ""
 workers_dev = true
 compatibility_date = "2022-02-21"
 send_metrics = false
-[env]
-SCRIPT = {{VALUE}}
+[vars]
+JAVASCRIPT_ID = {{JAVASCRIPT_ID}}
 [build]
 command = "npm run build"
 [build.upload]
