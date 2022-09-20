@@ -1,13 +1,14 @@
-name = "site-runtime-update"
+name = {{name}}
 type = "javascript"
 zone_id = ""
-account_id = "1aac99e7de77b4ba4c31a592232c354a"
+account_id = {{account_id}}
 route = ""
 workers_dev = true
 compatibility_date = "2022-02-21"
 send_metrics = false
 [vars]
 JAVASCRIPT_ID = {{JAVASCRIPT_ID}}
+DATABASE_URL = {{DATABASE_URL}}
 [build]
 command = "npm run build"
 [build.upload]

@@ -4,6 +4,8 @@ import { ContainerInstanceManagementClient } from '@azure/arm-containerinstance'
 import { DefaultAzureCredential } from '@azure/identity'
 import tomlHandler from './tomlHandler'
 import { exec } from 'child_process'
+import Mongoose from '../config/database/mongoose/config/mongoose.config'
+import Wrangler from '../config/database/mongoose/models/wrangler'
 
 dotenv.config()
 
@@ -14,11 +16,19 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server v3')
 })
 
+Mongoose.connect(process.env.DATABASE_URL)
+
 app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
-    tomlHandler.writePrefixFile(req.params.id as string)
+    const response = await Wrangler.findById(req.params.id).lean()
+    tomlHandler.writePrefixFile(
+      response._id.toString(),
+      response.name,
+      response.account_id,
+      process.env.DATABASE_URL,
+    )
     exec('npm run publish', (err, result) => {
-      if(err){
+      if (err) {
         res.status(500).json(err)
         return
       } else {
