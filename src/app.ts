@@ -6,6 +6,7 @@ import tomlHandler from './tomlHandler'
 import { exec } from 'child_process'
 import Mongoose from '../config/database/mongoose/config/mongoose.config'
 import Wrangler from '../config/database/mongoose/models/wrangler'
+import morgan from 'morgan'
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server v3')
 })
 
+app.use(morgan('combined'))
 Mongoose.connect(process.env.DATABASE_URL)
 
 app.get('/publish/:id', async (req: Request, res: Response) => {
