@@ -58,7 +58,7 @@ async function injectJavaScript(res: Response) {
   return new HTMLRewriter()
       // .on('head', new HeadRewriter())
       .on('title', new MetaRewriter())
-      .on('meta', new MetaRewriter())
-      .on('body', new BodyRewriter(instance.script))
+      .on('meta', new MetaRewriter(instance.head))
+      .on('body', new BodyRewriter(instance.bodyPrepend, instance.bodyAppend))
       .transform(res)
 }

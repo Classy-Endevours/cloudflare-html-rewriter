@@ -10,9 +10,20 @@ const WranglerSchema = new Schema(
       type: String,
       required: true,
     },
-    script: {
+    head: {
       type: String,
       required: true,
+      default: '',
+    },
+    bodyPrepend: {
+      type: String,
+      required: true,
+      default: '',
+    },
+    bodyAppend: {
+      type: String,
+      required: true,
+      default: '',
     },
   },
   { timestamps: true },

@@ -5,3 +5,5 @@ transpiled
 worker/
 serve/
 **/*.map
+src/instance.json
+wrangler.toml

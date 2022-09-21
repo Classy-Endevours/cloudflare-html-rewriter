@@ -1,15 +1,19 @@
-
-
 export default class BodyRewriter {
-  js: string
-
-  constructor(js: string){
-    this.js = js
+  bodyPrepend: string
+  bodyAppend: string
+  constructor(bodyPrepend = '', bodyAppend = '') {
+    this.bodyPrepend = bodyPrepend
+    this.bodyAppend = bodyAppend
   }
 
   element(element: any) {
-    element.append(this.js, {
-      html: true
-    })
+    if (this.bodyPrepend != '')
+      element.prepend(this.bodyPrepend, {
+        html: true,
+      })
+    if (this.bodyAppend != '')
+      element.append(this.bodyAppend, {
+        html: true,
+      })
   }
 }
