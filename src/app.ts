@@ -23,12 +23,7 @@ Mongoose.connect(process.env.DATABASE_URL)
 app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
     const response = await Wrangler.findById(req.params.id).lean()
-    tomlHandler.writePrefixFile(
-      response._id.toString(),
-      response.name,
-      response.account_id,
-      process.env.DATABASE_URL,
-    )
+    tomlHandler.writePrefixFile(response)
     exec('npm run publish', (err, result) => {
       if (err) {
         res.status(500).json(err)

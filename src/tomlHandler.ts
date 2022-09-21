@@ -5,22 +5,13 @@ class TomlHandler {
   prefixFileWrite: string
   constructor() {
     this.prefixFileRead = './wrangler-prefix.toml'
-    this.prefixFileWrite = './wrangler.toml'
+    this.prefixFileWrite = 'src/instance.json'
   }
 
   writePrefixFile(
-    JavaScriptId: string,
-    name: string,
-    account_id: string,
-    DATABASE_URL: string,
+    instance: any
   ) {
-    const file = readFileSync(this.prefixFileRead, 'utf-8')
-    const context = file
-      .replace('{{JAVASCRIPT_ID}}', `"${JavaScriptId}"`)
-      .replace('{{name}}', `"${name}"`)
-      .replace('{{account_id}}', `"${account_id}"`)
-      .replace('{{DATABASE_URL}}', `"${DATABASE_URL}"`)
-    writeFileSync(this.prefixFileWrite, context, 'utf-8')
+    writeFileSync(this.prefixFileWrite, JSON.stringify(instance), 'utf8');
     return
   }
 }
