@@ -7,12 +7,14 @@ import { exec } from 'child_process'
 import Mongoose from '../config/database/mongoose/config/mongoose.config'
 import Wrangler from '../config/database/mongoose/models/wrangler'
 import morgan from 'morgan'
+import cors from 'cors'
 
 dotenv.config()
 
 const app: Express = express()
 const port = process.env.PORT ?? 80
 app.use(express.json())
+app.use(cors())
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server v3')
 })

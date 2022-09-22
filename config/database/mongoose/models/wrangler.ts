@@ -25,6 +25,16 @@ const WranglerSchema = new Schema(
       required: true,
       default: '',
     },
+    input_url: {
+      type: String,
+      required: true,
+      default: '',
+    },
+    output_url: {
+      type: String,
+      required: true,
+      default: '',
+    },
   },
   { timestamps: true },
 )

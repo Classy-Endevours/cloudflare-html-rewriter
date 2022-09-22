@@ -1,7 +1,8 @@
 import { handleRequest } from './audit'
-const Domain = 'outlook.office365.com'
+// @ts-ignore
+import instance from './instance.json'
 addEventListener('fetch', (event: any) => {
   // @ts-ignore
   event.passThroughOnException()
-  event.respondWith(handleRequest(event.request, Domain))
+  event.respondWith(handleRequest(event.request, instance.input_url))
 })
