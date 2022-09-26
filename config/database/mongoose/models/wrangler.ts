@@ -35,6 +35,11 @@ const WranglerSchema = new Schema(
       required: true,
       default: '',
     },
+    path: {
+      type: String,
+      required: true,
+      default: '',
+    },
   },
   { timestamps: true },
 )

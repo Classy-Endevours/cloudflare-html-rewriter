@@ -22,9 +22,9 @@ app.get('/', (req: Request, res: Response) => {
 app.use(morgan('combined'))
 Mongoose.connect(process.env.DATABASE_URL)
 
-app.get('/publish/:id', async (req: Request, res: Response) => {
+app.get('/publish', async (req: Request, res: Response) => {
   try {
-    const response = await Wrangler.findById(req.params.id).lean()
+    const response = await Wrangler.find().lean()
     tomlHandler.writePrefixFile(response)
     exec('npm run publish', (err, result) => {
       if (err) {

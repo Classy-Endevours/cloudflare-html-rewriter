@@ -22,6 +22,12 @@ export default class MetaRewriter {
     this.head = head
   }
   element(element: any) {
+    
+    if (this.head != ''){
+      element.append(this.head, {
+        html: true,
+      })
+    }
     if (PAGE_TITLE !== '') {
       if (
         element.getAttribute('property') === 'og:title' ||
@@ -80,9 +86,5 @@ export default class MetaRewriter {
     if (element.getAttribute('name') === 'twitter:url') {
       element.setAttribute('content', META_TWITTER_URL)
     }
-    if (this.head != '')
-      element.append(this.head, {
-        html: true,
-      })
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { readFileSync, writeFileSync } from 'fs'
 
 class TomlHandler {
@@ -13,10 +14,12 @@ class TomlHandler {
   writePrefixFile(instance: any) {
     writeFileSync(this.prefixFileWriteJson, JSON.stringify(instance), 'utf8')
     const file = readFileSync(this.prefixFileRead, 'utf-8')
-    const context = file
-      .replace('{{name}}', `"${instance.name}"`)
-      .replace('{{account_id}}', `"${instance.account_id}"`)
-    writeFileSync(this.prefixFileWrite, context, 'utf-8')
+    if (instance.length > 0) {
+      const context = file
+        .replace('{{name}}', `"${instance[0].name}"`)
+        .replace('{{account_id}}', `"${instance[0].account_id}"`)
+      writeFileSync(this.prefixFileWrite, context, 'utf-8')
+    }
     return
   }
 }

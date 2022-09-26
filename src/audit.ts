@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import BodyRewriter from './rewriters/body'
 import HeadRewriter from './rewriters/head'
 import MetaRewriter from './rewriters/meta'
-    // @ts-ignore
-import instance from './instance.json'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -30,12 +31,13 @@ function handleOptions(request: Request) {
   }
 }
 
-export async function handleRequest(request: Request, domain: string) {
+// @ts-ignore
+export async function handleRequest(request: Request, instance: any) {
   if (request.method === 'OPTIONS') {
     return handleOptions(request)
   }
   const url = new URL(request.url)
-  url.hostname = domain
+  url.hostname = instance.input_url
   // url.hostname = 'lists.live.com'
 
   let response
@@ -49,11 +51,11 @@ export async function handleRequest(request: Request, domain: string) {
   response.headers.delete('Content-Security-Policy')
   response.headers.delete('X-Content-Security-Policy')
 
-  return injectJavaScript(response)
+  return injectJavaScript(response, instance)
 }
 
-
-async function injectJavaScript(res: Response) {
+// @ts-ignore
+async function injectJavaScript(res: Response, instance: any) {
   // @ts-ignore
   return new HTMLRewriter()
       // .on('head', new HeadRewriter())
