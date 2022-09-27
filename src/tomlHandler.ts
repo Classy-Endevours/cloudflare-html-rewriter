@@ -18,6 +18,7 @@ class TomlHandler {
       const context = file
         .replace('{{name}}', `"${instance[0].name}"`)
         .replace('{{account_id}}', `"${instance[0].account_id}"`)
+        .replace('{{output_url}}', `"${instance[0].output_url}"`)
       writeFileSync(this.prefixFileWrite, context, 'utf-8')
     }
     return
