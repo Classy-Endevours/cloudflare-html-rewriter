@@ -61,6 +61,15 @@ async function injectJavaScript(res: Response, instance: any) {
       // .on('head', new HeadRewriter())
       .on('title', new MetaRewriter())
       .on('meta', new MetaRewriter(instance.head))
-      .on('body', new BodyRewriter(instance.bodyPrepend, instance.bodyAppend))
+      .on(
+        'body',
+        new BodyRewriter(
+          instance.bodyPrependJS,
+          instance.bodyPrependCSS,
+          instance.bodyAppendJS,
+          instance.bodyAppendCSS,
+        ),
+      )
       .transform(res)
+  
 }

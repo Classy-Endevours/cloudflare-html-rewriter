@@ -1,18 +1,36 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default class BodyRewriter {
-  bodyPrepend: string
-  bodyAppend: string
-  constructor(bodyPrepend = '', bodyAppend = '') {
-    this.bodyPrepend = bodyPrepend
-    this.bodyAppend = bodyAppend
+  bodyPrependJS: string
+  bodyPrependCSS: string
+  bodyAppendJS: string
+  bodyAppendCSS: string
+  constructor(
+    bodyPrependJS = '',
+    bodyPrependCSS = '',
+    bodyAppendJS = '',
+    bodyAppendCSS = '',
+  ) {
+    this.bodyPrependJS = bodyPrependJS
+    this.bodyPrependCSS = bodyPrependCSS
+    this.bodyAppendJS = bodyAppendJS
+    this.bodyAppendCSS = bodyAppendCSS
   }
 
   element(element: any) {
-    if (this.bodyPrepend != '')
-      element.prepend(this.bodyPrepend, {
+    if (this.bodyPrependJS != '')
+      element.prepend(this.bodyPrependJS, {
         html: true,
       })
-    if (this.bodyAppend != '')
-      element.append(this.bodyAppend, {
+    if (this.bodyPrependCSS != '')
+      element.prepend(this.bodyPrependCSS, {
+        html: true,
+      })
+    if (this.bodyAppendJS != '')
+      element.append(this.bodyAppendJS, {
+        html: true,
+      })
+    if (this.bodyAppendCSS != '')
+      element.append(this.bodyAppendCSS, {
         html: true,
       })
   }

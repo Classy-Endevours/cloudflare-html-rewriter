@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-const { Schema } = mongoose
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 const WranglerSchema = new Schema(
   {
     name: {
@@ -13,35 +13,45 @@ const WranglerSchema = new Schema(
     head: {
       type: String,
       required: true,
-      default: '',
+      default: "",
     },
-    bodyPrepend: {
+    bodyPrependJS: {
       type: String,
       required: true,
-      default: '',
+      default: "",
     },
-    bodyAppend: {
+    bodyPrependCSS: {
       type: String,
       required: true,
-      default: '',
+      default: "",
+    },
+    bodyAppendJS: {
+      type: String,
+      required: true,
+      default: "",
+    },
+    bodyAppendCSS: {
+      type: String,
+      required: true,
+      default: "",
     },
     input_url: {
       type: String,
       required: true,
-      default: '',
+      default: "",
     },
     output_url: {
       type: String,
       required: true,
-      default: '',
+      default: "",
     },
     path: {
       type: String,
       required: true,
-      default: '',
+      default: "",
     },
   },
-  { timestamps: true },
-)
+  { timestamps: true }
+);
 
-export default mongoose.model('Wrangler', WranglerSchema)
+export default mongoose.model("Wrangler", WranglerSchema);
