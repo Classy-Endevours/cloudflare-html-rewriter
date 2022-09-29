@@ -59,7 +59,7 @@ export async function handleRequest(request: Request, instance: any) {
 async function injectJavaScript(res: Response, instance: any) {
   // @ts-ignore
   return new HTMLRewriter()
-      // .on('head', new HeadRewriter())
+      .on('head', new HeadRewriter(instance.head))
       .on('title', new MetaRewriter())
       .on('meta', new MetaRewriter(instance.head))
       .on(
