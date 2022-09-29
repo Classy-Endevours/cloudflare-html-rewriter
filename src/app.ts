@@ -5,7 +5,8 @@ import { DefaultAzureCredential } from '@azure/identity'
 import tomlHandler from './tomlHandler'
 import { exec } from 'child_process'
 import Mongoose from '../config/database/mongoose/config/mongoose.config'
-import Wrangler from '../config/database/mongoose/models/wrangler'
+import SiteProxy from '../config/database/mongoose/models/SiteProxy'
+import SiteProxyConst from '../config/database/mongoose/models/SiteProxyConst'
 import morgan from 'morgan'
 import cors from 'cors'
 
@@ -24,8 +25,9 @@ Mongoose.connect(process.env.DATABASE_URL)
 
 app.get('/publish', async (req: Request, res: Response) => {
   try {
-    const response = await Wrangler.find().lean()
-    tomlHandler.writePrefixFile(response)
+    const responseSite = await SiteProxy.find().lean()
+    const responseConst = await SiteProxyConst.findOne().lean();
+    tomlHandler.writePrefixFile(responseSite, responseConst)
     exec('npm run publish', (err, result) => {
       if (err) {
         res.status(500).json(err)

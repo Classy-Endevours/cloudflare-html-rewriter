@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
-const WranglerSchema = new Schema(
+const SiteProxySchema = new Schema(
   {
     name: {
       type: String,
@@ -54,4 +54,4 @@ const WranglerSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Wrangler", WranglerSchema);
+export default mongoose.model("SiteProxy", SiteProxySchema);

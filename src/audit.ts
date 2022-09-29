@@ -32,12 +32,12 @@ function handleOptions(request: Request) {
 }
 
 // @ts-ignore
-export async function handleRequest(request: Request, instance: any) {
+export async function handleRequest(request: Request, instance: any, instanceConst:any) {
   if (request.method === 'OPTIONS') {
     return handleOptions(request)
   }
   const url = new URL(request.url)
-  url.hostname = instance.input_url
+  url.hostname = instanceConst.input_url
   url.pathname = url.pathname.replace(instance.path, '')
   // url.hostname = 'lists.live.com'
 
