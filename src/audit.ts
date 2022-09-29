@@ -38,6 +38,7 @@ export async function handleRequest(request: Request, instance: any) {
   }
   const url = new URL(request.url)
   url.hostname = instance.input_url
+  url.pathname = url.pathname.replace(instance.path, '')
   // url.hostname = 'lists.live.com'
 
   let response
