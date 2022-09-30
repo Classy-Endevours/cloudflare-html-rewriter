@@ -23,11 +23,18 @@ app.get('/', (req: Request, res: Response) => {
 app.use(morgan('combined'))
 Mongoose.connect(process.env.DATABASE_URL)
 
-app.get('/publish', async (req: Request, res: Response) => {
+app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
-    const responseSite = await SiteProxy.find().lean()
-    const responseConst = await SiteProxyConst.findOne().lean();
-    tomlHandler.writePrefixFile(responseSite, responseConst)
+    const responseSite = await SiteProxy.find({
+      constant: req.params.id,
+    })
+      .populate('constant')
+      .lean()
+    if (responseSite.length <= 0) {
+      res.status(404).json({})
+      return
+    }
+    tomlHandler.writePrefixFile(responseSite, responseSite[0].constant)
     exec('npm run publish', (err, result) => {
       if (err) {
         res.status(500).json(err)

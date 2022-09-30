@@ -1,57 +1,44 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+import mongoose from 'mongoose'
+const { Schema } = mongoose
 const SiteProxySchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    account_id: {
-      type: String,
-      required: true,
-    },
     head: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     bodyPrependJS: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     bodyPrependCSS: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     bodyAppendJS: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     bodyAppendCSS: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
-    input_url: {
-      type: String,
+    constant: {
+      type: Schema.Types.ObjectId,
+      ref: 'SiteProxyConst',
       required: true,
-      default: "",
-    },
-    output_url: {
-      type: String,
-      required: true,
-      default: "",
     },
     path: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export default mongoose.model("SiteProxy", SiteProxySchema);
+export default mongoose.model('SiteProxy', SiteProxySchema)
