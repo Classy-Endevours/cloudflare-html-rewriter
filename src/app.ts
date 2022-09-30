@@ -27,14 +27,13 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
     const responseSite = await SiteProxy.find({
       constant: req.params.id,
-    })
-      .populate('constant')
-      .lean()
-    if (responseSite.length <= 0) {
+    }).lean()
+    const responseConst = await SiteProxyConst.findById(req.params.id).lean()
+    if (responseSite.length <= 0 || !responseConst) {
       res.status(404).json({})
       return
     }
-    tomlHandler.writePrefixFile(responseSite, responseSite[0].constant)
+    tomlHandler.writePrefixFile(responseSite, responseConst)
     exec('npm run publish', (err, result) => {
       if (err) {
         res.status(500).json(err)
