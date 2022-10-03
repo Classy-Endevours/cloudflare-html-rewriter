@@ -9,8 +9,43 @@ import SiteProxy from '../config/database/mongoose/models/SiteProxy'
 import SiteProxyConst from '../config/database/mongoose/models/SiteProxyConst'
 import morgan from 'morgan'
 import cors from 'cors'
+import cron from 'node-cron'
 
 dotenv.config()
+
+cron.schedule('0 0 * * *', async () => {
+  try {
+    const responseConsts = await SiteProxyConst.find().lean()
+    for (const item of responseConsts) {
+      const endTime = new Date(new Date().setHours(11, 59, 59)).setDate(
+        new Date().getDate() - 1,
+      )
+      const startTime = new Date(new Date().setHours(0, 0, 0)).setDate(
+        new Date().getDate() - 1,
+      )
+      const responseSite = await SiteProxy.find({
+        constant: item._id,
+        isExpired: false,
+        isUpdated: {
+          $lte: startTime,
+          $gte: endTime,
+        },
+      }).lean()
+      if (responseSite.length > 0) {
+        tomlHandler.writePrefixFile(responseSite, item)
+        exec('npm run publish', (err, result) => {
+          if (err) {
+            console.log({ err })
+          } else {
+            console.log({ result })
+          }
+        })
+      }
+    }
+  } catch (error) {
+    console.log({ error })
+  }
+})
 
 const app: Express = express()
 const port = process.env.PORT ?? 80

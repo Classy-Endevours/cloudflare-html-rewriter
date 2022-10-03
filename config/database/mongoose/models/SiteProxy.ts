@@ -37,6 +37,11 @@ const SiteProxySchema = new Schema(
       required: true,
       default: '',
     },
+    isExpired: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true },
 )
