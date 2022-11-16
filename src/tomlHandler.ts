@@ -10,7 +10,7 @@ class TomlHandler {
     this.prefixFileRead = './wrangler-prefix.toml'
     this.prefixFileWriteJson = 'src/instance.json'
     this.prefixFileWrite = './wrangler.toml'
-    this.prefixFileWriteDeploymentJson = './deployment.json'
+    this.prefixFileWriteDeploymentJson = 'src/deployment.json'
   }
 
   writePrefixFile(instance: any, instanceConsnt: any) {
