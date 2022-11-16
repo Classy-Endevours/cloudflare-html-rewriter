@@ -2,6 +2,7 @@
 import { handleRequest } from './audit'
 // @ts-ignore
 import instance from './instance.json'
+// @ts-ignore
 import instanceConst from './deployment.json'
 addEventListener('fetch', (event: any) => {
   // @ts-ignore
