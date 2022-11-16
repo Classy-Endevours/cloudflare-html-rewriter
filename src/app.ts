@@ -10,6 +10,8 @@ import SiteProxyConst from '../config/database/mongoose/models/SiteProxyConst'
 import morgan from 'morgan'
 import cors from 'cors'
 import cron from 'node-cron'
+import mongoose from 'mongoose';
+
 
 dotenv.config()
 
@@ -61,7 +63,7 @@ Mongoose.connect(process.env.DATABASE_URL)
 app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
     const responseSite = await SiteProxy.find({
-      constant: req.params.id,
+      constant: mongoose.Types.ObjectId(req.params.id),
     }).lean()
     const responseConst = await SiteProxyConst.findById(req.params.id).lean()
     if (responseSite.length <= 0 || !responseConst) {
