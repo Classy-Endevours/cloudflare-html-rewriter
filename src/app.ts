@@ -63,7 +63,7 @@ Mongoose.connect(process.env.DATABASE_URL)
 app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
     const responseSite = await SiteProxy.find({
-      constant: mongoose.Types.ObjectId(req.params.id),
+      constant: new mongoose.Types.ObjectId(req.params.id),
     }).lean()
     const responseConst = await SiteProxyConst.findById(req.params.id).lean()
     if (responseSite.length <= 0 || !responseConst) {
