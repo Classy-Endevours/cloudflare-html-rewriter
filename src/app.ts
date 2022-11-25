@@ -73,11 +73,9 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
     tomlHandler.writePrefixFile(responseSite, responseConst)
     exec('npm run publish', (err, stdout, stderr) => {
       if (err) {
-        res.status(500).json(err)
+        // res.status(500).json(err)
         return
       } else {
-        res.status(200).json()
-        return
       }
     })
 
@@ -104,6 +102,9 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
     //   },
     // )
     // res.status(200).json(result)
+    
+    res.status(200).json()
+    return
   } catch (error) {
     res.status(500).json(error)
   }
