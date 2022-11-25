@@ -71,10 +71,14 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
       return
     }
     tomlHandler.writePrefixFile(responseSite, responseConst)
-    const { stdout, stderr } = await exec('npm run publish')
-
-    res.status(200).json({
-      stdout, stderr
+    await exec('npm run publish', (err, stdout, stderr) => {
+      if (err) {
+        res.status(500).json(err)
+        return
+      } else {
+        res.status(200).json()
+        return
+      }
     })
 
     // const subscriptionId = process.env.SUBSCRIPTION_ID ?? req.query.SUBSCRIPTION_ID as string
