@@ -74,7 +74,7 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
     exec('npm run publish', (err, stdout, stderr) => {
       if (err) {
         // res.status(500).json(err)
-        return
+        return res.status(500).json(err)
       } else {
       }
     })
@@ -103,10 +103,10 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
     // )
     // res.status(200).json(result)
     
-    res.status(200).json()
-    return
+    
+    return res.status(200).json()
   } catch (error) {
-    res.status(500).json(error)
+    return res.status(500).json(error)
   }
 })
 
