@@ -74,7 +74,9 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
     exec('npm run publish', (err, stdout, stderr) => {
       if (err) {
         // res.status(500).json(err)
-        return res.status(500).json(err)
+        console.log({err});
+        
+        // return res.status(500).json(err)
       } else {
       }
     })
