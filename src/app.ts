@@ -10,8 +10,7 @@ import SiteProxyConst from '../config/database/mongoose/models/SiteProxyConst'
 import morgan from 'morgan'
 import cors from 'cors'
 import cron from 'node-cron'
-import mongoose from 'mongoose';
-
+import mongoose from 'mongoose'
 
 dotenv.config()
 
@@ -64,7 +63,14 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
   try {
     const responseSite = await SiteProxy.find({
       constant: new mongoose.Types.ObjectId(req.params.id),
-    }).lean()
+    })
+      .populate({
+        path: 'themeParameters',
+        populate: {
+          path: 'theme',
+        },
+      })
+      .lean()
     const responseConst = await SiteProxyConst.findById(req.params.id).lean()
     if (responseSite.length <= 0 || !responseConst) {
       res.status(404).json({})
@@ -74,8 +80,8 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
     exec('npm run publish', (err, stdout, stderr) => {
       if (err) {
         // res.status(500).json(err)
-        console.log({err});
-        
+        console.log({ err })
+
         // return res.status(500).json(err)
       } else {
       }
@@ -104,8 +110,7 @@ app.get('/publish/:id', async (req: Request, res: Response) => {
     //   },
     // )
     // res.status(200).json(result)
-    
-    
+
     return res.status(200).json()
   } catch (error) {
     return res.status(500).json(error)

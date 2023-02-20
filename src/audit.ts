@@ -69,6 +69,7 @@ async function injectJavaScript(res: Response, instance: any) {
           instance.bodyPrependCSS,
           instance.bodyAppendJS,
           instance.bodyAppendCSS,
+          instance.themeParameters
         ),
       )
       .transform(res)
