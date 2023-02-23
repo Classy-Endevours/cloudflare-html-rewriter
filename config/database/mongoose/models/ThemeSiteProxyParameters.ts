@@ -1,5 +1,5 @@
 import mongoose, { Document, Model, PopulatedDoc, Schema } from "mongoose";
-import { IThemeSiteProxy } from "./ThemeSiteProxy";
+import ThemeSiteProxy, { IThemeSiteProxy } from "./ThemeSiteProxy";
 
 export interface IThemeSiteProxyParameters {
   parameter: any;
@@ -31,7 +31,7 @@ const ThemeSiteProxyParametersSchema = new Schema<
     },
     theme: {
       type: Schema.Types.ObjectId,
-      ref: "ThemeSiteProxy",
+      ref: ThemeSiteProxy,
       required: true,
     },
     user: {

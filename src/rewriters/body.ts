@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import _ from 'lodash';
 export default class BodyRewriter {
   bodyPrependJS: string
   bodyPrependCSS: string
@@ -24,10 +23,28 @@ export default class BodyRewriter {
   element(element: any) {
     if (this.themeParameters && this.themeParameters.length > 0) {
       for (const themeParameter of this.themeParameters) {
-        this.bodyAppendCSS = _.template(this.bodyAppendCSS)(themeParameter.parameter)
-        this.bodyAppendJS = _.template(this.bodyAppendJS)(themeParameter.parameter)
-        this.bodyPrependCSS = _.template(this.bodyPrependCSS)(themeParameter.parameter)
-        this.bodyPrependJS = _.template(this.bodyPrependJS)(themeParameter.parameter)
+        if (themeParameter.parameter && Object.keys(themeParameter.parameter).length) {
+          Object.keys(themeParameter.parameter).map((key) => {
+            const item = `{{${key}}}`
+            this.bodyAppendCSS += themeParameter?.theme?.bodyAppendCSS.replace(
+              item,
+              themeParameter.parameter[item],
+            )
+            this.bodyAppendJS += themeParameter?.theme?.bodyAppendJS.replace(
+              item,
+              themeParameter.parameter[item],
+            )
+            this.bodyPrependCSS +=
+              themeParameter?.theme?.bodyPrependCSS.replace(
+                item,
+                themeParameter.parameter[item],
+              )
+            this.bodyPrependJS += themeParameter?.theme?.bodyPrependJS.replace(
+              item,
+              themeParameter.parameter[item],
+            )
+          })
+        }
       }
     }
     if (this.bodyPrependJS != '')

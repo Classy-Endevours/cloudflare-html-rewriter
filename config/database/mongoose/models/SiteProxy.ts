@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ThemeSiteProxyParameters from "./ThemeSiteProxyParameters";
 const { Schema } = mongoose;
 const SiteProxySchema = new Schema(
   {
@@ -44,7 +45,7 @@ const SiteProxySchema = new Schema(
     },
     themeParameters: [{
       type: Schema.Types.ObjectId,
-      ref: 'ThemeSiteProxyParameters',
+      ref: ThemeSiteProxyParameters,
       // required: true,
     }],
     path: {

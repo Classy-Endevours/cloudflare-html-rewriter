@@ -1,22 +1,23 @@
-const GOOGLE_FONT: any = ''
-
 export default class HeadRewriter {
   head: string
-  constructor(head = '') {
+  themeParameters: any
+  constructor(head = '', themeParameters = '') {
     this.head = head
+    this.themeParameters = themeParameters
   }
   element(element: any) {
-    if (GOOGLE_FONT !== '') {
-      element.append(
-        `<link href="https://fonts.googleapis.com/css?family=${GOOGLE_FONT.replace(
-          ' ',
-          '+',
-        )}:Regular,Bold,Italic&display=swap" rel="stylesheet">
-          <style>* { font-family: "${GOOGLE_FONT}" !important; }</style>`,
-        {
-          html: true,
-        },
-      )
+    if (this.themeParameters && this.themeParameters.length > 0) {
+      for (const themeParameter of this.themeParameters) {
+        if (themeParameter.parameter && Object.keys(themeParameter.parameter).length) {
+          Object.keys(themeParameter.parameter).map((key) => {
+            const item = `{{${key}}}`
+            this.head += themeParameter?.theme?.head.replace(
+              item,
+              themeParameter.parameter[item],
+            )
+          })
+        }
+      }
     }
     if (this.head != '') {
       element.append(this.head, {
