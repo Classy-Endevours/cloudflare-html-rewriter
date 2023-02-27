@@ -23,27 +23,57 @@ export default class BodyRewriter {
   element(element: any) {
     if (this.themeParameters && this.themeParameters.length > 0) {
       for (const themeParameter of this.themeParameters) {
-        if (themeParameter.parameter && Object.keys(themeParameter.parameter).length) {
-          Object.keys(themeParameter.parameter).map((key) => {
-            const item = `{{${key}}}`
-            this.bodyAppendCSS += themeParameter?.theme?.bodyAppendCSS.replace(
-              item,
-              themeParameter.parameter[item],
-            )
-            this.bodyAppendJS += themeParameter?.theme?.bodyAppendJS.replace(
-              item,
-              themeParameter.parameter[item],
-            )
-            this.bodyPrependCSS +=
-              themeParameter?.theme?.bodyPrependCSS.replace(
+        if (
+          themeParameter.parameter &&
+          Object.keys(themeParameter.parameter).length
+        ) {
+          if (Object.keys(themeParameter.parameter)) {
+            Object.keys(themeParameter.parameter).map((key) => {
+              const item = `{{${key}}}`
+              this.bodyAppendCSS +=
+                themeParameter?.theme?.bodyAppendCSS.replace(
+                  item,
+                  themeParameter.parameter[item],
+                )
+              this.bodyAppendJS += themeParameter?.theme?.bodyAppendJS.replace(
                 item,
                 themeParameter.parameter[item],
               )
-            this.bodyPrependJS += themeParameter?.theme?.bodyPrependJS.replace(
-              item,
-              themeParameter.parameter[item],
-            )
-          })
+              this.bodyPrependCSS +=
+                themeParameter?.theme?.bodyPrependCSS.replace(
+                  item,
+                  themeParameter.parameter[item],
+                )
+              this.bodyPrependJS +=
+                themeParameter?.theme?.bodyPrependJS.replace(
+                  item,
+                  themeParameter.parameter[item],
+                )
+            })
+          } else {
+            Object.keys(themeParameter?.theme.defaultParameter).map((key) => {
+              const item = `{{${key}}}`
+              this.bodyAppendCSS +=
+                themeParameter?.theme?.bodyAppendCSS.replace(
+                  item,
+                  themeParameter?.theme.defaultParameter[item],
+                )
+              this.bodyAppendJS += themeParameter?.theme?.bodyAppendJS.replace(
+                item,
+                themeParameter?.theme.defaultParameter[item],
+              )
+              this.bodyPrependCSS +=
+                themeParameter?.theme?.bodyPrependCSS.replace(
+                  item,
+                  themeParameter?.theme.defaultParameter[item],
+                )
+              this.bodyPrependJS +=
+                themeParameter?.theme?.bodyPrependJS.replace(
+                  item,
+                  themeParameter?.theme.defaultParameter[item],
+                )
+            })
+          }
         }
       }
     }

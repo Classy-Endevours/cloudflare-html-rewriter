@@ -1,18 +1,19 @@
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose, { Model, Schema } from 'mongoose'
 
 export interface IThemeSiteProxy {
-  name: string;
-  head: string;
-  bodyPrependJS: string;
-  bodyPrependCSS: string;
-  bodyAppendJS: string;
-  bodyAppendCSS: string;
-  parameter: unknown;
-  user: Schema.Types.ObjectId;
-  isDeleted: boolean;
-  tag: string;
-  benefits: string[];
-  popular: boolean;
+  name: string
+  head: string
+  bodyPrependJS: string
+  bodyPrependCSS: string
+  bodyAppendJS: string
+  bodyAppendCSS: string
+  parameter: unknown
+  user: Schema.Types.ObjectId
+  isDeleted: boolean
+  tag: string
+  benefits: string[]
+  popular: boolean
+  defaultParameter: unknown
 }
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IThemeSiteProxyModel extends Model<IThemeSiteProxy> {}
@@ -28,31 +29,36 @@ const ThemeSiteProxySchema = new Schema<IThemeSiteProxy, IThemeSiteProxyModel>(
     popular: {
       type: Boolean,
     },
+    defaultParameter: {
+      type: Object,
+      // required: true,
+      default: {},
+    },
     benefits: [{ type: String }],
     head: {
       type: String,
       // required: true,
-      default: "",
+      default: '',
     },
     bodyPrependJS: {
       type: String,
       // required: true,
-      default: "",
+      default: '',
     },
     bodyPrependCSS: {
       type: String,
       // required: true,
-      default: "",
+      default: '',
     },
     bodyAppendJS: {
       type: String,
       // required: true,
-      default: "",
+      default: '',
     },
     bodyAppendCSS: {
       type: String,
       // required: true,
-      default: "",
+      default: '',
     },
     parameter: {
       type: Object,
@@ -61,7 +67,7 @@ const ThemeSiteProxySchema = new Schema<IThemeSiteProxy, IThemeSiteProxyModel>(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
       required: true,
     },
     isDeleted: {
@@ -69,7 +75,7 @@ const ThemeSiteProxySchema = new Schema<IThemeSiteProxy, IThemeSiteProxyModel>(
       default: false,
     },
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export default mongoose.model("ThemeSiteProxy", ThemeSiteProxySchema);
+export default mongoose.model('ThemeSiteProxy', ThemeSiteProxySchema)
