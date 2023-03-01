@@ -52,6 +52,8 @@ export async function handleRequest(request: Request, instance: any, instanceCon
   response.headers.delete('Content-Security-Policy')
   response.headers.delete('X-Content-Security-Policy')
 
+  await fetch(`${process.env.API_URL}/site-proxy/update-views${instance.path}`)
+
   return injectJavaScript(response, instance)
 }
 
