@@ -32,18 +32,17 @@ function handleOptions(request: Request) {
 }
 
 // @ts-ignore
-export async function handleRequest(request: Request, instance: any, instanceConst:any) {
+export async function handleRequest(request: Request, instanceConst:any) {
   if (request.method === 'OPTIONS') {
     return handleOptions(request)
   }
   const url = new URL(request.url)
+  const [_, siteId] = url.pathname.split('/')
+  console.log(siteId)
   url.hostname = instanceConst.input_url
-  url.pathname = url.pathname.replace(instance.path, '')
-  // url.hostname = 'lists.live.com'
+  url.pathname = url.pathname.replace(siteId, '')
 
-  let response
-
-  response = await fetch(url.toString(), {
+  let response = await fetch(url.toString(), {
     body: request.body,
     headers: request.headers,
     method: request.method,
@@ -52,9 +51,12 @@ export async function handleRequest(request: Request, instance: any, instanceCon
   response.headers.delete('Content-Security-Policy')
   response.headers.delete('X-Content-Security-Policy')
 
-  await fetch(`${process.env.API_URL}/site-proxy/update-views${instance.path}`)
+  fetch(`https://walrus-app-v3k99.ondigitalocean.app/api/site-proxy/update-views/${siteId}`)
+  const resp = await fetch(`https://walrus-app-v3k99.ondigitalocean.app/api/site-proxy/get-instance/${siteId}`)
+  const data = await resp.json()
 
-  return injectJavaScript(response, instance)
+  // return injectJavaScript(response, instance)
+  return injectJavaScript(response, data)
 }
 
 // @ts-ignore
