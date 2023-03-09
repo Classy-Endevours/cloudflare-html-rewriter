@@ -31,19 +31,32 @@ function handleOptions(request: Request) {
   }
 }
 
+const BACKEND_ROUTE = 'https://walrus-app-v3k99.ondigitalocean.app/api'
+
 // @ts-ignore
-export async function handleRequest(request: Request, instance: any, instanceConst:any) {
+export async function handleRequest(request: Request, instanceConst:any) {
   if (request.method === 'OPTIONS') {
     return handleOptions(request)
   }
   const url = new URL(request.url)
+  const [_, siteId] = url.pathname.split('/')
+  fetch(`${BACKEND_ROUTE}/site-proxy/update-views/${siteId}`)
+  const resp = await fetch(`${BACKEND_ROUTE}/site-proxy/get-instance/${siteId}`)
+  const data = await resp.json()
   url.hostname = instanceConst.input_url
-  url.pathname = url.pathname.replace(instance.path, '')
-  // url.hostname = 'lists.live.com'
+  url.pathname = url.pathname.replace(siteId, '')
+  
+  if(url.pathname === '/') {
+    url.pathname = data.pageUrl
+  }
+  console.log(siteId)
+  console.log({
+    path: url.pathname,
+    data: data.pageUrl
+  })
+  if(!data._id) throw new Error('No route found')
 
-  let response
-
-  response = await fetch(url.toString(), {
+  let response = await fetch(url.toString(), {
     body: request.body,
     headers: request.headers,
     method: request.method,
@@ -52,9 +65,9 @@ export async function handleRequest(request: Request, instance: any, instanceCon
   response.headers.delete('Content-Security-Policy')
   response.headers.delete('X-Content-Security-Policy')
 
-  await fetch(`${process.env.API_URL}/site-proxy/update-views${instance.path}`)
 
-  return injectJavaScript(response, instance)
+  // return injectJavaScript(response, instance)
+  return injectJavaScript(response, data)
 }
 
 // @ts-ignore
