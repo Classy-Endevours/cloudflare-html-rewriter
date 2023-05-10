@@ -34,27 +34,31 @@ function handleOptions(request: Request) {
 const BACKEND_ROUTE = 'https://walrus-app-v3k99.ondigitalocean.app/api'
 
 // @ts-ignore
-export async function handleRequest(request: Request, instanceConst:any) {
+export async function handleRequest(request: Request, instanceConst: any) {
   if (request.method === 'OPTIONS') {
     return handleOptions(request)
   }
   const url = new URL(request.url)
   const [_, siteId] = url.pathname.split('/')
+  
   fetch(`${BACKEND_ROUTE}/site-proxy/update-views/${siteId}`)
   const resp = await fetch(`${BACKEND_ROUTE}/site-proxy/get-instance/${siteId}`)
   const data = await resp.json()
+  console.log({
+    data: JSON.stringify(data)
+  })
   url.hostname = instanceConst.input_url
   url.pathname = url.pathname.replace(siteId, '')
-  
-  if(url.pathname === '/') {
+
+  if (url.pathname === '/') {
     url.pathname = data.pageUrl
   }
   console.log(siteId)
   console.log({
     path: url.pathname,
-    data: data.pageUrl
+    data: data.pageUrl,
   })
-  if(!data._id) throw new Error('No route found')
+  if (!data._id) throw new Error('No route found')
 
   let response = await fetch(url.toString(), {
     body: request.body,
@@ -65,7 +69,6 @@ export async function handleRequest(request: Request, instanceConst:any) {
   response.headers.delete('Content-Security-Policy')
   response.headers.delete('X-Content-Security-Policy')
 
-
   // return injectJavaScript(response, instance)
   return injectJavaScript(response, data)
 }
@@ -74,19 +77,19 @@ export async function handleRequest(request: Request, instanceConst:any) {
 async function injectJavaScript(res: Response, instance: any) {
   // @ts-ignore
   return new HTMLRewriter()
-      .on('head', new HeadRewriter(instance.head, instance.themeParameters))
-      .on('title', new MetaRewriter())
-      .on('meta', new MetaRewriter(instance.head))
-      .on(
-        'body',
-        new BodyRewriter(
-          instance.bodyPrependJS,
-          instance.bodyPrependCSS,
-          instance.bodyAppendJS,
-          instance.bodyAppendCSS,
-          instance.themeParameters
-        ),
-      )
-      .transform(res)
-  
+    .on('head', new HeadRewriter(instance.head, instance.themeParameters))
+    .on('title', new MetaRewriter())
+    .on('meta', new MetaRewriter(instance.head))
+    .on(
+      'body',
+      new BodyRewriter(
+        instance._id,
+        instance.bodyPrependJS,
+        instance.bodyPrependCSS,
+        instance.bodyAppendJS,
+        instance.bodyAppendCSS,
+        instance.themeParameters,
+      ),
+    )
+    .transform(res)
 }
