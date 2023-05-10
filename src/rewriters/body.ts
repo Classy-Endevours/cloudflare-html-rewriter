@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default class BodyRewriter {
+  id: string
   bodyPrependJS: string
   bodyPrependCSS: string
   bodyAppendJS: string
   bodyAppendCSS: string
   themeParameters: any
   constructor(
+    id = '',
     bodyPrependJS = '',
     bodyPrependCSS = '',
     bodyAppendJS = '',
     bodyAppendCSS = '',
     themeParameters = null,
   ) {
+    this.id = id
     this.bodyPrependJS = bodyPrependJS
     this.bodyPrependCSS = bodyPrependCSS
     this.bodyAppendJS = bodyAppendJS
@@ -93,5 +96,13 @@ export default class BodyRewriter {
       element.append(this.bodyAppendCSS, {
         html: true,
       })
+
+    // appending id of the instance
+    element.prepend(
+      `<input type="hidden" id="pageRewriterId" name="pageRewriterId" value="${this.id}">`,
+      {
+        html: true,
+      },
+    )
   }
 }
