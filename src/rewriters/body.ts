@@ -34,25 +34,30 @@ export default class BodyRewriter {
           let bodyPrependJS = themeParameter?.theme?.bodyPrependJS ?? ""
           let bodyAppendCSS = themeParameter?.theme?.bodyAppendCSS ?? ""
           let bodyPrependCSS = themeParameter?.theme?.bodyPrependCSS ?? ""
-
+          console.log({
+            themeParameter: JSON.stringify(themeParameter.parameter, null, 4)
+          })
           if (Object.keys(themeParameter.parameter)) {
             Object.keys(themeParameter.parameter).map((key) => {
               const item = `{{${key}}}`
+              console.log({
+                themeParameter: JSON.stringify(themeParameter.parameter, null, 4)
+              })
               bodyAppendCSS = bodyAppendCSS.replace(
                   item,
-                  themeParameter.parameter[item],
+                  themeParameter.parameter[key],
                 )
                 bodyAppendJs = bodyAppendJs.replace(
                 item,
-                themeParameter.parameter[item],
+                themeParameter.parameter[key],
               )
               bodyPrependCSS = bodyPrependCSS.replace(
                   item,
-                  themeParameter.parameter[item],
+                  themeParameter.parameter[key],
                 )
               bodyPrependJS = bodyPrependJS.replace(
                   item,
-                  themeParameter.parameter[item],
+                  themeParameter.parameter[key],
                 )
             })
           } else {
@@ -60,19 +65,19 @@ export default class BodyRewriter {
               const item = `{{${key}}}`
               bodyAppendCSS = bodyAppendCSS.replace(
                 item,
-                themeParameter.parameter[item],
+                themeParameter.parameter[key],
               )
               bodyAppendJs = bodyAppendJs.replace(
               item,
-              themeParameter.parameter[item],
+              themeParameter.parameter[key],
             )
             bodyPrependCSS = bodyPrependCSS.replace(
                 item,
-                themeParameter.parameter[item],
+                themeParameter.parameter[key],
               )
             bodyPrependJS = bodyPrependJS.replace(
                 item,
-                themeParameter.parameter[item],
+                themeParameter.parameter[key],
               )
             })
           }
