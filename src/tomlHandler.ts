@@ -15,7 +15,7 @@ class TomlHandler {
     const file = readFileSync(this.prefixFileRead, 'utf-8')
     if (Object.keys(instanceConst).length > 0) {
       const context = file
-        .replace('{{name}}', `"${instanceConst.name}"`)
+        .replace('{{name}}', `"${instanceConst.pageContainerName}"`)
         .replace('{{account_id}}', `"${instanceConst.account_id}"`)
         .replace('{{output_url}}', `"${instanceConst.output_url}"`)
       writeFileSync(this.prefixFileWrite, context, 'utf-8')
