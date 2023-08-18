@@ -44,14 +44,14 @@ export async function handleRequest(request: Request, instanceConst: any) {
   fetch(`${BACKEND_ROUTE}/site-proxy/update-views/${siteId}`)
   const resp = await fetch(`${BACKEND_ROUTE}/site-proxy/get-instance/${siteId}`)
   const data = await resp.json()
-  url.hostname = instanceConst.input_url
+  if (!data._id) throw new Error('No route found')
+
+  url.hostname = data.constant.input_url
   url.pathname = url.pathname.replace(siteId, '')
 
   if (url.pathname === '/') {
     url.pathname = data.pageUrl
   }
-  if (!data._id) throw new Error('No route found')
-
   let response = await fetch(url.toString(), {
     body: request.body,
     headers: request.headers,
